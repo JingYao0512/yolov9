@@ -562,6 +562,10 @@ def run(
                     f"\nVisualize:       https://netron.app")
     return f  # return list of exported files/dirs
 
+#python export.py --data data/lung.yaml --weights runs/train/lung10/weights/best.pt --name lung_val --include onnx
+# python export.py --data data/lung.yaml --weights runs/train/lung-e2/weights/best.pt  --include onnx
+# python export.py --data data/lung.yaml --weights runs/train/lung-e-ori/weights/best.pt  --include onnx
+
 
 def parse_opt():
     parser = argparse.ArgumentParser()

@@ -900,7 +900,11 @@ def non_max_suppression(
     """
 
     if isinstance(prediction, (list, tuple)):  # YOLO model in validation model, output = (inference_out, loss_out)
-        prediction = prediction[0]  # select only inference output
+        if(len(prediction[0]) == 1):
+            prediction = prediction[0] # select only inference output
+        else:
+            prediction = prediction[0][0]
+
 
     device = prediction.device
     mps = 'mps' in device.type  # Apple MPS
@@ -934,6 +938,7 @@ def non_max_suppression(
         # Cat apriori labels if autolabelling
         if labels and len(labels[xi]):
             lb = labels[xi]
+           
             v = torch.zeros((len(lb), nc + nm + 5), device=x.device)
             v[:, :4] = lb[:, 1:5]  # box
             v[range(len(lb)), lb[:, 0].long() + 4] = 1.0  # cls
