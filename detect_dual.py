@@ -96,6 +96,7 @@ def run(
         with dt[1]:
             visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
             pred = model(im, augment=augment, visualize=visualize)
+            pred = pred[0][1]
 
         # NMS
         with dt[2]:
@@ -185,9 +186,7 @@ def run(
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
 
-#python detect.py --source combine.png --data data/lung.yaml  --device cpu --weights runs/train/lung10/weights/best.pt --view-img --name lung_val
-#python detect.py --source 000000000285.jpg --data data/coco.yaml  --device cpu --weights yolov9-c-converted.pt --view-img --name yolov9_c_c_640_val
-#python detect.py --source combine.png --data data/lung.yaml   --weights runs/train/lung10/weights/best.pt --view-img --name lung_val
+
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolo.pt', help='model path or triton URL')
